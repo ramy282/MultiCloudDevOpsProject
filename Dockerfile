@@ -6,16 +6,17 @@ WORKDIR /app
 
 # Copy only the build files needed for dependency resolution
 COPY build.gradle settings.gradle ./
-COPY src/ src/
 
-# Download and resolve dependencies
-RUN gradle resolveDependencies --stacktrace
+# Download and resolve dependencies using the Gradle Wrapper
+COPY gradlew .
+COPY gradle gradle
+RUN ./gradlew resolveDependencies --stacktrace
 
 # Copy the rest of the source code
 COPY . .
 
-# Build the application
-RUN gradle build --stacktrace
+# Build the application using the Gradle Wrapper
+RUN ./gradlew build --stacktrace
 
 # Use a minimal base image for the runtime
 FROM adoptopenjdk:11-jre-hotspot
