@@ -8,10 +8,21 @@
     <title>My App</title>
 </head>
 <body>
-    <h1>My App</h1>
+    <h1>iVolve Technologies</h1>
     <h3>Hello, Spring Boot NTI</h3>
-    <div>
-        My Pod IP is : <?php echo $_SERVER['SERVER_ADDR']; ?>
-    </div>
+    <div id="ipContainer">My Pod IP is : <span id="ipAddress">Loading...</span></div>
+
+    <script>
+        // Fetch IP address using a third-party service (example: ipinfo.io)
+        fetch('https://ipinfo.io/json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ipAddress').textContent = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                document.getElementById('ipAddress').textContent = 'Unable to fetch IP';
+            });
+    </script>
 </body>
 </html>
