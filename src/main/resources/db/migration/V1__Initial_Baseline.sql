@@ -31,7 +31,7 @@ create table follows (
 
 create table tags (
   id varchar(255) primary key,
-  name varchar(255) not null
+  name varchar(255)
 );
 
 create table article_tags (
