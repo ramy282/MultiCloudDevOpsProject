@@ -20,8 +20,6 @@ COPY src src
 # Build the application
 RUN ./gradlew build
 
-# Copy the application JAR file into the container at /app
-COPY build/libs/guestbook-*.jar guestbook.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
