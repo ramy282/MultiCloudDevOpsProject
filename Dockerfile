@@ -8,9 +8,8 @@ WORKDIR /app
 COPY build.gradle .
 COPY settings.gradle .
 
-# Copy only the dependency-related files to cache dependencies
-COPY src/main/resources src/main/resources
-COPY src/main/java/com/example/demo/Application.java src/main/java/com/example/demo/
+# Copy the entire project to the container
+COPY . .
 
 # Download dependencies and build the project
 RUN ./gradlew build -x test
