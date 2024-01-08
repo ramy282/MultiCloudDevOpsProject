@@ -24,4 +24,4 @@ RUN ./gradlew build
 EXPOSE 8080
 
 # Specify the command to run your Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "build/libs/spring-boot-app-0.0.1-SNAPSHOT.jar"]
