@@ -8,13 +8,13 @@
     <title>My App</title>
 </head>
 <body>
-    <h1>iVolve Technologies</h1>
+    <h1>My App</h1>
     <h3>Hello, Spring Boot NTI</h3>
     <div id="ipContainer">My Pod IP is : <span id="ipAddress">Loading...</span></div>
 
     <script>
-        // Fetch IP address using a third-party service (example: ipinfo.io)
-        fetch('https://ipinfo.io/json')
+        // Fetch IP address using a different service (example: api.ipify.org)
+        fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
                 document.getElementById('ipAddress').textContent = data.ip;
