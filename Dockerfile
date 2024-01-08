@@ -1,34 +1,26 @@
-# Use a minimal base image for building
-FROM gradle:7.3.3-jdk11 AS build
+# Use an official OpenJDK image with JDK as a parent image
+FROM openjdk:11-jdk-slim
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy only the build files needed for dependency resolution
-COPY build.gradle settings.gradle ./
+# Copy the Gradle files to the container
+COPY build.gradle .
+COPY settings.gradle .
 
-# Download and resolve dependencies using the Gradle Wrapper
+# Copy the gradle wrapper files and download the dependencies
 COPY gradlew .
 COPY gradle gradle
+RUN chmod +x gradlew
 RUN ./gradlew dependencies
 
-# Copy the rest of the source code
-COPY . .
+# Copy the application source code
+COPY src src
 
-# Build the application using the Gradle Wrapper
-RUN ./gradlew build --stacktrace
+# Build the application
+RUN ./gradlew build
 
-# Use a minimal base image for the runtime
-FROM adoptopenjdk:11-jre-hotspot
-
-# Set the working directory
-WORKDIR /app
-
-# Copy the JAR file from the build stage
-COPY --from=build /app/build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the port your app runs on
+# Expose the port that the application will run on (assuming your Spring Boot app uses port 8080)
 EXPOSE 8080
 
-# Define the command to run your application
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "spring-boot-app.jar"]
