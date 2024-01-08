@@ -10,7 +10,7 @@ COPY build.gradle settings.gradle ./
 # Download and resolve dependencies using the Gradle Wrapper
 COPY gradlew .
 COPY gradle gradle
-RUN ./gradlew resolveDependencies --stacktrace
+RUN ./gradlew dependencies
 
 # Copy the rest of the source code
 COPY . .
