@@ -1,28 +1,33 @@
-# Use an official OpenJDK runtime as a parent image
-FROM adoptopenjdk:11-jdk-hotspot
+# Use a minimal base image for building
+FROM gradle:7.3.3-jdk11 AS build
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the Gradle files to the container
-COPY build.gradle .
-COPY settings.gradle .
+# Copy only the build files needed for dependency resolution
+COPY build.gradle settings.gradle ./
+COPY src/ src/
 
-# Copy the gradle wrapper files and download the dependencies
-COPY gradlew .
-COPY gradle gradle
-RUN chmod +x gradlew
-RUN ./gradlew dependencies
+# Download and resolve dependencies
+RUN gradle resolveDependencies --stacktrace
 
-# Copy the application source code
-COPY src src
+# Copy the rest of the source code
+COPY . .
 
 # Build the application
-RUN ./gradlew build
+RUN gradle build --stacktrace
 
+# Use a minimal base image for the runtime
+FROM adoptopenjdk:11-jre-hotspot
 
-# Expose the port the app runs on
+# Set the working directory
+WORKDIR /app
+
+# Copy the JAR file from the build stage
+COPY --from=build /app/build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose the port your app runs on
 EXPOSE 8080
 
-# Run the application
-CMD ["java", "-jar", "/app/build/libs/guestbook.jar"]
+# Define the command to run your application
+CMD ["java", "-jar", "app.jar"]
