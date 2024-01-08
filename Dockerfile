@@ -23,8 +23,5 @@ RUN ./gradlew build
 # Expose the port that the application will run on (assuming your Spring Boot app uses port 8080)
 EXPOSE 8080
 
-# Copy the application JAR to a specific directory
-RUN cp build/libs/spring-boot-app-0.0.1-SNAPSHOT.jar /app/app.jar
-
 # Specify the command to run your Spring Boot application
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "app.jar"]
