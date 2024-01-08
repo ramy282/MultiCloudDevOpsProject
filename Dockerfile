@@ -25,4 +25,4 @@ RUN ./gradlew build
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "guestbook.jar"]
+CMD ["java", "-jar", "/app/build/libs/guestbook.jar"]
