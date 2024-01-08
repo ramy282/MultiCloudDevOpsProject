@@ -1,3 +1,5 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:8-jdk-alpine
 
-COPY /build/libs/spring-boot-realworld-example-app-0.0.1-SNAPSHOT.jar /spring-boot-realworld-example-app-0.0.1-SNAPSHOT.jar
+COPY build/libs/guestbook*.jar app.jar
+
+ENTRYPOINT ["java","-Dspring.profiles.active=prod","-jar","/app.jar"]

@@ -1,69 +1,48 @@
-# ![RealWorld Example App using Kotlin and Spring](example-logo.png)
+# About
 
-[![Actions](https://github.com/gothinkster/spring-boot-realworld-example-app/workflows/Java%20CI/badge.svg)](https://github.com/gothinkster/spring-boot-realworld-example-app/actions)
+A simple guestbook webapp written in java using [Spring Boot](https://spring.io/projects/spring-boot).
 
-> ### Spring boot + MyBatis codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
+# Run
 
-This codebase was created to demonstrate a fully fledged fullstack application built with Spring boot + Mybatis including CRUD operations, authentication, routing, pagination, and more.
+* In dev environment: `gradle bootRun`
+* In prod environment: Create runnable jar (see [Build](#Build)), and start it with `java -Dspring.profiles.active=prod -jar app.jar`
 
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
+# Build
 
-# How it works
+Following procedure describes how to build a Docker Image and push it to the [registry](https://gitlab.com/mn94/guestbook/container_registry).
 
-The application uses Spring boot (Web, Mybatis).
+*Assuming you're working directory is the project root.*
 
-* Use the idea of Domain Driven Design to separate the business term and infrastruture term.
-* Use MyBatis to implement the [Data Mapper](https://martinfowler.com/eaaCatalog/dataMapper.html) pattern for persistence.
-* Use [CQRS](https://martinfowler.com/bliki/CQRS.html) pattern to separate the read model and write model.
-
-And the code organize as this:
-
-1. `api` is the web layer to implement by Spring MVC
-2. `core` is the business model including entities and services
-3. `application` is the high level services for query with the data transfer objects
-4. `infrastructure`  contains all the implementation classes as the technique details
-
-# Security
-
-Integration with Spring Security and add other filter for jwt token process.
-
-The secret key is stored in `application.properties`.
+1. Build Runnable Jar: `gradle bootJar`
+2. Build Docker Image: `docker build -t registry.gitlab.com/mn94/guestbook:latest .`
+3. (optional) Login to Registry: `docker login registry.gitlab.com`
+4. Push to Registry: `docker push registry.gitlab.com/mn94/guestbook:latest`
 
 # Database
 
-It uses a H2 in memory database (for now), can be changed easily in the `application.properties` for any other database.
+* The schema DDL can be found in the project root `schema.sql`.
+* To regenerate the `schema.sql` based on the JPA entities follow [this](https://stackoverflow.com/questions/36966337/how-to-generate-a-ddl-creation-script-with-a-modern-spring-boot-data-jpa-and-h) approach.
 
-# Getting started
+# Setup Application Stack
 
-You need Java 8 installed.
+Before deploying the webapp, the application stack needs to be setup properly. This is meant to be a unique task (per deployment system), which includes setting up a [docker network](https://docs.docker.com/network/), a [MySQL container](https://hub.docker.com/_/mysql), an inspector container as well as creating the initial schema.
 
-    ./gradlew bootRun
+1. Create Network: `docker network create --driver=bridge guestbook`
+2. Run MySQL Container: `docker run --name guestbook_db -v guestbook_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=guestbook --network guestbook -d mysql:5.7`
+3. Run inspection container: `docker run -dit --name guestbook_inspector --network guestbook alpine ash`
+4. Copy schema to inspection container: `docker cp schema.sql guestbook_inspector:/tmp/schema.sql` (assuming `schema.sql` is in your current working directory)
+5. Connect to inspection container: `docker container attach guestbook_inspector`
+6. Install mysql client and curl: `apk update && apk upgrade && apk add mysql-client curl`
+7. Import schema to MySQL DB: `mysql -h guestbook_db -u root -p guestbook < /tmp/schema.sql`
+8. Disconnect from inspection container: `CTRL+P CTRL+Q`
 
-To test that it works, open a browser tab at http://localhost:8080/tags .  
-Alternatively, you can run
+# Deploy
 
-    curl http://localhost:8080/tags
+Following procedure describes how to deploy the guestbook webapp using docker. The same procedure applies when deploying new versions of the app. 
 
-# Try it out with [Docker](https://www.docker.com/)
+*Make sure the application stack has been [setup](#setup-application-stack) and the Docker Image has been [built](#Build).*
 
-You need Docker installed.
-	
-	docker-compose up -d
-
-# Try it out with a RealWorld frontend
-
-The entry point address of the backend API is at http://localhost:8080, **not** http://localhost:8080/api as some of the frontend documentation suggests.
-
-# Run test
-
-The repository contains a lot of test cases to cover both api test and repository test.
-
-    ./gradlew test
-
-# Use git pre-commit hook
-
-Follow the instruction from [google-java-format-git-pre-commit-hook](https://github.com/a1exsh/google-java-format-git-pre-commit-hook) to use a `pre-commit` hook to make the code format style stable from different contributors.
-
-# Help
-
-Please fork and PR to improve the code.
+1. Delete old container (if exists): `docker container stop guestbook && docker container rm guestbook || true`
+2. (optional) Login to Registry: `docker login registry.gitlab.com`
+3. Pull latest image: `docker pull registry.gitlab.com/mn94/guestbook:latest`
+4. Run container (on port 80 of host): `docker run -d -p 80:8080 --name guestbook --network guestbook registry.gitlab.com/mn94/guestbook:latest`
