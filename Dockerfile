@@ -1,5 +1,14 @@
-FROM openjdk:8-jdk-alpine
+# Use an official OpenJDK runtime as a parent image
+FROM adoptopenjdk:11-jre-hotspot
 
-COPY build/libs/guestbook*.jar app.jar
+# Set the working directory to /app
+WORKDIR /app
 
-ENTRYPOINT ["java","-Dspring.profiles.active=prod","-jar","/app.jar"]
+# Copy the application JAR file into the container at /app
+COPY build/libs/guestbook-*.jar guestbook.jar
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Run the application
+CMD ["java", "-jar", "guestbook.jar"]
