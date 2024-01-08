@@ -15,7 +15,7 @@ COPY . /home/gradle/project
 RUN gradle build
 
 
-FROM openjdk:11-jre-slim
+FROM openjdk:11-jdk-slim
 
 WORKDIR /home/gradle/project
 
