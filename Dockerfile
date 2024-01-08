@@ -6,10 +6,12 @@ WORKDIR /app
 
 # Copy the Gradle files to the container
 COPY build.gradle .
-COPY gradlew .
+COPY settings.gradle .
 
 # Copy the gradle wrapper files and download the dependencies
+COPY gradlew .
 COPY gradle gradle
+RUN chmod +x gradlew
 RUN ./gradlew dependencies
 
 # Copy the application source code
