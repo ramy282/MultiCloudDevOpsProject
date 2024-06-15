@@ -1,0 +1,88 @@
+---
+# tasks
+    - name: Install postgres packages 
+      apt: 
+        name: 
+          - postgresql-contrib
+          - postgresql
+        state: present 
+        update_cache: yes 
+
+    - name: start postgres
+      systemd: 
+        name: postgresql 
+        state: started
+        enabled: yes
+
+    - name: Create SonarQube User
+      command: sudo -u postgres psql -c "CREATE USER "{{ sonar_usr }}" WITH PASSWORD '{{ sonar_pass }}';"
+      ignore_errors: yes
+
+    - name: Create SonarQube Database
+      command: sudo -u postgres psql -c "CREATE DATABASE "{{ sonar_db }}" OWNER "{{ sonar_usr }}";"
+      ignore_errors: yes
+
+    - name: Give SonarQube user privileges on SonarQubedb
+      command: sudo -u postgres psql -c "privileges of db"{{ sonar_db }}" TO "{{ sonar_usr }}";"
+      ignore_errors: yes
+   
+    - name: Add sonarqube user
+      user:
+        name: "{{ sonar_usr}}"
+        createhome: yes
+        state: present
+        home: /opt/sonarqube
+        shell: /bin/bash
+     
+    - name: Add settings block to sysctl.conf
+      ansible.builtin.blockinfile:
+        path: /etc/sysctl.conf
+        block: |
+          vm.max_map_count=524288
+          fs.file-max=131072
+
+    - name: apply the added settings 
+      command: sysctl --system
+
+    - name: Download SonarQube
+      get_url:
+        url: "https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.1.69595.zip"
+        dest: /home/ubuntu/sonarqube-9.9.1.69595.zip
+
+    - name: Extract SonarQube
+      unarchive:
+        src: /home/ubuntu/sonarqube-9.9.1.69595.zip
+        dest: /opt
+        group: sonarqube
+        owner: sonarqube
+        remote_src: yes
+
+    - name: Add settings block to sysctl.conf
+      blockinfile:
+        path: /opt/sonarqube-9.9.1.69595/conf/sonar.properties
+        block: |
+          sonar.web.javaAdditionalOpts=-server
+          sonar.web.host=0.0.0.0
+          sonar.web.port=9000
+          sonar.search.javaOpts=-Xmx512m -Xms512m -XX:MaxDirectMemorySize=256m -XX:+HeapDumpOnOutOfMemoryError
+          sonar.jdbc.username=sonarqube
+          sonar.jdbc.password=pass
+          sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
+          sonar.log.level=INFO
+          sonar.path.logs=logs
+        
+    - name: Move SonarQube Service file 
+      copy: 
+        src: sonarqube.service
+        dest: /etc/systemd/system/sonarqube.service
+
+    - name: Reload sys Daemon 
+      systemd: 
+        daemon_reload: yes 
+
+    - name: Start SonarQube 
+      systemd: 
+        name: sonarqube
+        enabled: yes
+        state: started
+
