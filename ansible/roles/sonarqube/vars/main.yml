@@ -1,0 +1,3 @@
+sonar_usr: sonarqube
+sonar_pass: pass
+sonar_db: sonarqube
