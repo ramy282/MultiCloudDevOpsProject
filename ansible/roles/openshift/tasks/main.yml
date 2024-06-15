@@ -1,0 +1,32 @@
+- name: Download OpenShift client
+  get_url:
+    url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.10.1/openshift-client-linux.tar.gz
+    dest: /tmp/openshift-client-linux.tar.gz
+
+
+- name: Extract OpenShift client 
+  unarchive:
+    src: /tmp/openshift-client-linux.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Show the contents of tmp directory 
+  command: "ls -l /tmp"
+  register: output
+
+- name: Debug ls output
+  debug:
+    var: output.stdout_lines    
+
+- name: Copy oc to Ansible controller
+  fetch:
+    src: "/tmp/oc"
+    dest: "/tmp/"
+    flat: yes
+
+- name: Copy oc to /usr/local/bin on Ansible controller
+  copy:
+    src: "/tmp/oc"
+    dest: "/usr/local/bin/"
+    mode: '0755'
+
