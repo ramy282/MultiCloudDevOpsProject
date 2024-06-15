@@ -1,0 +1,15 @@
+- name: update apt 
+  apt:
+    update_cache: yes
+    upgrade: safe
+
+- name: Install required packages
+  apt: 
+    name: 
+      - git 
+      - wget
+      - unzip 
+      - openjdk-11-jdk
+    state: present
+    update_cache: yes
+
