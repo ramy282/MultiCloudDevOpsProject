@@ -1,56 +1,89 @@
+@Library('Jenkins-Shared-Library')_
 pipeline {
     agent any
-
+    
     environment {
-        DOCKER_REGISTRY = 'docker.io/mohamedemam2020'
-        DOCKER_IMAGE = 'spring-boot-app'
-        OPENSHIFT_PROJECT = 'nti'
-        OPENSHIFT_SERVER = 'https://api.ocpuat.devopsconsulting.org:6443'
-        APP_SERVICE_NAME = 'spring-boot-app'
-        APP_PORT = '8080'
-        APP_HOST_NAME = 'spring-boot-app.apps.ocpuat.devopsconsulting.org'
+    imageName   		        = 'ramy282/Grad-project'     	     // DockerHub repo/image name.
+    dockerHubCredentialsID	    = 'DockerHub'  		    			// DockerHub credentials ID.
+	openshiftCredentialsID	    = 'openshift-token'		         	// service account token credentials ID
+	openshiftClusterURL	        = 'https://api.ocp-training.ivolve-test.com:6443'
+	nameSpace                   = 'ramyanwar'
+	gitRepoName 	            = 'MultiCloudDevOpsProject'
+    gitUserName 	            = 'ramy282'
+	gitUserEmail                = 'ramyanwar282@gmail.com'
+	githubToken                 = 'github-token'
+	sonarqubeUrl                = 'http://3.80.238.182:9000/'
+	sonarTokenCredentialsID     = 'sonar-token'
+//	k8sCredentialsID	        = 'kubernetes'
+    }
+    
+    stages {       
+
+        stage('Run Unit Test') {
+            steps {
+                script {
+                    dir('Application') {	
+                	         runUnitTests()
+                    }
+        	}
+    	    }
+	}
+	stage('Build') {
+            steps {
+                script {
+                	dir('Application') {
+                	         build()	
+                    }
+        	}
+            }
+        }
+	stage('SonarQube Analysis') {
+            steps {
+                script {
+                    dir('Application') {
+                                sonarQubeAnalysis()	
+                        }
+            }
+        }
     }
 
-    stages {
-        stage('Checkout') {
+    stage('Build and Push Docker Image') {
+        steps {
+            script {
+                dir('Application') {
+                        buildandPushDockerImage("${dockerHubCredentialsID}", "${imageName}")
+                }	
+            }
+        }
+    }
+    stage('Edit new image in deployment.yaml file') {
             steps {
-                script {
-                    git branch: 'main', url: 'https://github.com/EngMohamedElEmam/spring-boot-app'
+                script { 
+                    
+                    editNewImage("${githubToken}", "${imageName}", "${gitUserEmail}", "${gitUserName}", "${gitRepoName}")
+                
                 }
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}")
+    stage('Deploy on OpenShift Cluster') {
+        steps {
+            script { 
+                dir('oc') {
+                            
+                    deployOnOc("${openshiftCredentialsID}", "${nameSpace}", "${clusterUrl}")
                 }
             }
         }
+    }
+    }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'DOCKER_REGISTRY_USERNAME', passwordVariable: 'DOCKER_REGISTRY_PASSWORD')]) {
-                        sh "echo \${DOCKER_REGISTRY_PASSWORD} | docker login -u \${DOCKER_REGISTRY_USERNAME} --password-stdin"
-                        docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}").push()
-                    }
-                }
-            }
+    post {
+        success {
+            echo "${JOB_NAME}-${BUILD_NUMBER} pipeline succeeded"
         }
-
-        stage('Deploy to OpenShift') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'openshift-credentials', variable: 'OPENSHIFT_SECRET')]) {
-                    sh "oc login --token=\${OPENSHIFT_SECRET} \${OPENSHIFT_SERVER} --insecure-skip-tls-verify"
-                    }
-                    sh "oc project \${OPENSHIFT_PROJECT}"
-                    sh "oc delete dc,svc,deploy,ingress,route \${DOCKER_IMAGE} || true"
-                    sh "oc new-app \${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
-                    sh "oc create route edge --service \${APP_SERVICE_NAME} --port \${APP_PORT} --hostname \${APP_HOST_NAME} --insecure-policy Redirect"
-                }
-            }
+        failure {
+            echo "${JOB_NAME}-${BUILD_NUMBER} pipeline failed"
         }
     }
 }
