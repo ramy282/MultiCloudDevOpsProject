@@ -1,0 +1,11 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: route-app
+  namespace: ramyanwar
+spec:
+  to:
+    kind: Service
+    name: Grad-project-
+  port:
+    targetPort: 8082
