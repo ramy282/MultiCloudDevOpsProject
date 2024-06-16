@@ -1,20 +1,20 @@
-@Library('Jenkins-Shared-Library')_
+@Library('Shared-Library')_
 pipeline {
     agent any
     
     environment {
-    imageName   		        = 'ramy282/Grad-project'     	     // DockerHub repo/image name.
-    dockerHubCredentialsID	    = 'DockerHub'  		    			// DockerHub credentials ID.
-	openshiftCredentialsID	    = 'openshift-token'		         	// service account token credentials ID
-	openshiftClusterURL	        = 'https://api.ocp-training.ivolve-test.com:6443'
+        imageName   		    = 'ramy282/Grad-project'     	         // DockerHub repo/image name.
+        dockerHubCredentialsID	    = 'DockerHub'  		    		// DockerHub credentials ID.
+	openshiftCredentialsID	    = 'oc-token'		         	// service account token credentials ID
+	openshiftClusterURL	    = 'https://api.ocp-training.ivolve-test.com:6443'
 	nameSpace                   = 'ramyanwar'
 	gitRepoName 	            = 'MultiCloudDevOpsProject'
-    gitUserName 	            = 'ramy282'
+        gitUserName 	            = 'ramy282'
 	gitUserEmail                = 'ramyanwar282@gmail.com'
 	githubToken                 = 'github-token'
 	sonarqubeUrl                = 'http://3.80.238.182:9000/'
 	sonarTokenCredentialsID     = 'sonar-token'
-//	k8sCredentialsID	        = 'kubernetes'
+//	k8sCredentialsID	    = 'kubernetes'
     }
     
     stages {       
