@@ -6,6 +6,9 @@ metadata:
 spec:
   to:
     kind: Service
-    name: Grad-project-
+    name: Grad-project-service
   port:
     targetPort: 8082
+  tls:
+    termination: edge
+  wildcardPolicy: None
