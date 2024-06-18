@@ -1,5 +1,6 @@
 ---
-- hosts: all 
+- name: Ivolve Graduation Project
+  hosts: all 
   become: true 
   roles: 
     - git
