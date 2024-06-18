@@ -3,6 +3,6 @@
 def call(){ 
 	withSonarQubeEnv() { 
 		    sh 'chmod +x gradlew'
-        	sh "./gradlew iVolve-Grad-project" 
+        	sh "./gradlew sonarqube-server" 
 	}
 }
