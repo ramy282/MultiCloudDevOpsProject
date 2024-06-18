@@ -1,18 +1,13 @@
-def call(dockerHubCredentialsID, imageName) {
-    stage('Build and Push Docker Image') {
-        def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-        def fullImageName = "${imageName}:${commitHash}"
+#!usr/bin/env groovy
+def call(String dockerHubCredentialsID, String imageName) {
 
-        sh """
-        docker build -t ${fullImageName} .
-        """
-
-        docker.withRegistry('https://index.docker.io/v1/', dockerHubCredentialsID) {
-            sh """
-            docker push ${fullImageName}
-            """
+	// Log in to DockerHub 
+	withCredentials([usernamePassword(credentialsId: "${dockerHubCredentialsID}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+		sh "docker login -u ${USERNAME} -p ${PASSWORD}"
         }
-
-        env.IMAGE_NAME = fullImageName
-    }
+        
+        // Build and push Docker image
+        echo "Building and Pushing Docker image..."
+        sh "docker build -t ${imageName}:${BUILD_NUMBER} ."
+        sh "docker push ${imageName}:${BUILD_NUMBER}"	 
 }
