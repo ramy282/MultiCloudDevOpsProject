@@ -322,7 +322,27 @@ resource "aws_route_table_association" "route_table_ass" {
 
 applyyyyyyyyyyyyyyyyyyyyyyyy
 
-4. **Destroy:**
+## Check the created resources on aws 
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/28475a11-f119-4d82-a9a7-97af43d0c9a7)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/4973e5c3-a21c-4dc6-a26a-e9525211d8c3)
+
+instanceeeeeeeeeeeeeeeeeeee
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/71b891ee-98fb-4371-8c58-4a1dc2a417eb)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/db01cf63-dc68-4067-a5d6-402cda13cdd4)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/3111c79e-0803-4430-9fda-7b167637f168)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/59d5614d-c5dc-41e6-a252-0591c2d4261c)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/a98b6c50-577e-48f6-b3d6-7082eb9816cc)
+
+## Destroy AWS Enviroment
+
+ **Destroy:**
     - Run Command `terraform destroy` to destroy all resources created in your enviroment.
 
 ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/011df653-fa1b-4eea-9765-5eb2a06186d9)
