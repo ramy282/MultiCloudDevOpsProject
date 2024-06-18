@@ -21,27 +21,26 @@ pipeline {
         stage('Run Unit Test') {
             steps {
                 script {
-                    dir('Application') {	
+                
                 	         runUnitTests()
-                    }
+                    
         	}
     	    }
 	}
 	stage('Build') {
             steps {
                 script {
-                	dir('Application') {
+                	
                 	         build()	
-                    }
+                    
         	}
             }
         }
 	stage('SonarQube Analysis') {
             steps {
                 script {
-                    dir('Application') {
                                 sonarQubeAnalysis()	
-                        }
+                        
             }
         }
     }
@@ -49,9 +48,9 @@ pipeline {
     stage('Build and Push Docker Image') {
         steps {
             script {
-                dir('Application') {
+                
                         buildandPushDockerImage("${dockerHubCredentialsID}", "${imageName}")
-                }	
+                	
             }
         }
     }
@@ -68,7 +67,7 @@ pipeline {
     stage('Deploy on OpenShift Cluster') {
         steps {
             script { 
-                dir('oc') {
+                dir('openshift') {
                             
                     deployOnOc("${openshiftCredentialsID}", "${nameSpace}", "${clusterUrl}")
                 }
