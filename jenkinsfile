@@ -12,9 +12,8 @@ pipeline {
         gitUserName 	            = 'ramy282'
 	gitUserEmail                = 'ramyanwar282@gmail.com'
 	githubToken                 = 'github-token'
-	sonarqubeUrl                = 'http://3.80.238.182:9000/'
 	sonarTokenCredentialsID     = 'sonar-token'
-//	k8sCredentialsID	    = 'kubernetes'
+
     }
     
     stages {       
