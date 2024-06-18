@@ -15,68 +15,62 @@ pipeline {
 	sonarTokenCredentialsID     = 'sonar-token'
 
     }
-    
-    stages {       
+    stages {
+        stage('Repo Checkout') {
+           steps {
+            	script {
+                	gitcheckout()
+                }
+            }
+        }
 
         stage('Run Unit Test') {
             steps {
                 script {
-                
-                	         runUnitTests()
-                    
-        	}
+                	
+                		unitTests()
+            		
+        	   }
     	    }
-	}
-	stage('Build') {
-            steps {
-                script {
-                	
-                	         build()	
-                    
-        	}
-            }
-        }
-	stage('SonarQube Analysis') {
-            steps {
-                script {
-                                sonarQubeAnalysis()	
-                        
-            }
-        }
-    }
+	    }
 
-    stage('Build and Push Docker Image') {
-        steps {
-            script {
-                
-                        buildandPushDockerImage("${dockerHubCredentialsID}", "${imageName}")
-                	
-            }
-        }
-    }
-    stage('Edit new image in deployment.yaml file') {
+        stage('Run SonarQube Analysis') {
             steps {
-                script { 
+                script {
+                    	
+                    		sonarQubeAnalysis()
+                    	
+                    }
+                }
+            }
+
+        
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
                     
-                    editNewImage("${githubToken}", "${imageName}", "${gitUserEmail}", "${gitUserName}", "${gitRepoName}")
-                
+                        buildAndPushDockerImage(dockerHubCredentialsID, imageName, BUILD_NUMBER)
+                    
                 }
             }
         }
 
-    stage('Deploy on OpenShift Cluster') {
-        steps {
-            script { 
-                dir('openshift') {
-                            
-                    deployOnOc("${openshiftCredentialsID}", "${nameSpace}", "${clusterUrl}")
+        stage('Deploy on OpenShift Cluster') {
+            steps {
+                script {
+                    
+                        deployToOpenShift(openshiftCredentialsID, openshiftClusterURL, openshiftProject, imageName, BUILD_NUMBER)
+                    
                 }
             }
         }
-    }
     }
 
     post {
+        always {
+            echo "Pipeline completed."
+            cleanWs() // Clean workspace after the build is finished
+        }
         success {
             echo "${JOB_NAME}-${BUILD_NUMBER} pipeline succeeded"
         }
