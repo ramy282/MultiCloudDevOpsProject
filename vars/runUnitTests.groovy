@@ -1,5 +1,6 @@
+#!/usr/bin/env groovy
 def call() {
-    stage('Run Unit Test') {
-        sh 'mvn test'
-    }
+	echo "Running Unit Test..."
+	sh 'chmod +x gradlew'
+	sh './gradlew clean test'	
 }
