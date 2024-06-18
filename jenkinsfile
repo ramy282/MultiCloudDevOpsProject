@@ -16,19 +16,12 @@ pipeline {
 
     }
     stages {
-        stage('Repo Checkout') {
-           steps {
-            	script {
-                	gitcheckout()
-                }
-            }
-        }
-
+        
         stage('Run Unit Test') {
             steps {
                 script {
                 	
-                		unitTests()
+                		runUnitTests()
             		
         	   }
     	    }
@@ -49,7 +42,7 @@ pipeline {
             steps {
                 script {
                     
-                        buildAndPushDockerImage(dockerHubCredentialsID, imageName, BUILD_NUMBER)
+                        buildandPushDockerImage(dockerHubCredentialsID, imageName, BUILD_NUMBER)
                     
                 }
             }
@@ -59,7 +52,7 @@ pipeline {
             steps {
                 script {
                     
-                        deployToOpenShift(openshiftCredentialsID, openshiftClusterURL, openshiftProject, imageName, BUILD_NUMBER)
+                        deployOnOC(openshiftCredentialsID, openshiftClusterURL, openshiftProject, imageName, BUILD_NUMBER)
                     
                 }
             }
