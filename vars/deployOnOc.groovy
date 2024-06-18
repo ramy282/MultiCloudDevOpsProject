@@ -1,12 +1,12 @@
-def call(openshiftCredentialsID, nameSpace, clusterUrl) {
-    stage('Deploy on OpenShift Cluster') {
-        withCredentials([kubeconfigFile(credentialsId: openshiftCredentialsID, variable: 'KUBECONFIG')]) {
-            sh """
-            oc login ${clusterUrl}
-            oc project ${nameSpace}
-            oc apply -f k8s/deployment.yaml
-            oc rollout status deployment/${imageName}
-            """
-        }
+#!/usr/bin/env groovy
+def call(String OpenShiftCredentialsID, String openshiftClusterurl, String openshiftProject, String imageName, String BUILD_NUMBER) {
+    
+    // login to OpenShift Cluster via cluster url & service account token
+    withCredentials([string(credentialsId: "${OpenShiftCredentialsID}", variable: 'OpenShift_CREDENTIALS')]) {
+            sh "oc login --server=${openshiftClusterurl} --token=${OpenShift_CREDENTIALS} --insecure-skip-tls-verify"
+            sh "oc apply -f deployment.yml"
+            sh "oc apply -f service.yml"
+            sh "oc expose svc ivolve-project-service"
     }
+
 }
