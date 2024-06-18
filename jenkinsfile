@@ -13,6 +13,8 @@ pipeline {
 	gitUserEmail                = 'ramyanwar282@gmail.com'
 	githubToken                 = 'github-token'
 	sonarTokenCredentialsID     = 'sonar-token'
+        SCANNER_HOME           = tool 'sonar-scanner'
+
 
     }
     stages {
