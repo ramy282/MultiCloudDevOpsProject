@@ -1,13 +1,8 @@
-def call() {
-    stage('SonarQube Analysis') {
-        withSonarQubeEnv('SonarQubeServer') {
-            sh """
-            sonar-scanner \
-            -Dsonar.projectKey=${env.SonarProjectKey} \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=${env.sonarqubeUrl} \
-            -Dsonar.login=${env.sonarTokenCredentialsID}
-            """
-        }
-    }
+#!/usr/bin/env groovy
+
+def call(){ 
+	withSonarQubeEnv() { 
+		    sh 'chmod +x gradlew'
+        	sh "./gradlew sonar" 
+	}
 }
