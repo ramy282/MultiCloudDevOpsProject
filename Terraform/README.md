@@ -17,9 +17,8 @@ This Terraform modules configuration establishes an AWS environment that include
    ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/291595bf-bc6b-4d8a-bb70-4236c02f7e6d)
 
 
-### Configuration:
+## The Structure of the Enviromrnt
 
-- The Structure of the Enviromrnt
 ```
 .
 ├── main.tf
@@ -62,6 +61,9 @@ This Terraform modules configuration establishes an AWS environment that include
         └── variables.tf
 
 ``` 
+
+### Configuration:
+
 1. **VPC:**
    - Employs the ./vpc module to create a Virtual Private Cloud (VPC) with the designated CIDR block.
 
