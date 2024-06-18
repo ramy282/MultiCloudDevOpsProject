@@ -100,27 +100,70 @@ applyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 
       ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/b9b377d1-c56d-4f43-aa68-9237cf578ab2)
    
-   - To get DockerHub token
-   - go to Account settings >> secuirty >> New access token
+    - To get DockerHub token
+    - go to Account settings >> secuirty >> New access token
 
-     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/31fe735b-ded1-404a-a905-ab7d47000e5f)
+      ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/31fe735b-ded1-404a-a905-ab7d47000e5f)
 
-   - To get oc token
-   - login to your oc cluster
-   - Create Service account
-   - print the token 
+    - To get oc token
+    - login to your oc cluster
+    - Create Service account
+    - print the token 
 
-     ```
+    ```
      oc create serviceaccount token
      oc sa get-token token    
-     ```
-     
-     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/481ba74b-5c4b-497d-b5c2-ed734ff18fdc)
-
-
-    - To get SonarQube Token 
     
-    - access SonarQube through http://ec2_IPv4:9000 
-    - Login by username admin and password admin 
-    - Create New Credentials 
-    - 
+     
+      ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/481ba74b-5c4b-497d-b5c2-ed734ff18fdc)
+
+8. Access SonarQube
+   - access through http://EC2_IPv4:9000
+   - login by Username admin and password admin
+
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/372bdfb9-798a-4963-b02b-4dfb67c80ec0)
+
+   - Create a local Project >> Enter your Project name >> use global settings
+
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/f0d208f7-7fbe-4f23-be0e-8a85c8a0a4d3)
+
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/c4617542-37d8-4502-89e1-8da1694508b2)
+
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/b3a4a9b1-8ecd-4587-9f6a-fec8a4b3db61)
+
+   - to get SonarQube Access token:
+   - Under Adminstration section click secuirty >> under token click create token
+  
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/e7123a10-ecf8-4db6-a6fd-e110f6cbf98a)
+   
+    ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/a9c2f7f4-d619-4486-9a80-79a220c00495)
+
+9. Access Jenkins
+   - Access through http://EC2_IPv4:8080
+   - login by initial admin password
+
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/78cf978a-b6b3-49c8-814f-4c7cef42538a)
+    
+   - Install suggest plugins
+
+       ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/b21badb8-3221-45ca-8064-7049da568c67)
+  
+   - Install SonarQube Scannar plugin
+   - go manage jenkins >> plugins >> available plugins >> Search for "SonarQube Scannar"
+
+     ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/3c88effb-577b-4875-8089-ce66bd0dc574)
+
+   - Add your credentials
+   - go manage jenkins >> credentials >> system >> Add credentials
+   - add github , DockerHub , oc-tocken and sonar-token
+
+    ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/c93ed9b3-aff3-401b-9844-ad399c7d3663)
+
+    ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/33e7d572-6f6a-48de-8047-8f3566cf2149)
+
+   - Add SonarQube Scanner in tools:
+   - go to manage jenkins >> tools >> scrool down to SconarQube installation >> Add SonarQube Scanner
+  
+    ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/13ba5e71-84b2-4c76-95c5-8bb82a542f4d)
+
+   - 
