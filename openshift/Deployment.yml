@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grad-project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grad-project
+  template:
+    metadata:
+      labels:
+        app: grad-project
+    spec:
+      containers:
+      - name: grad-project
+        image: docker.io/ramy282/grad-project:16
+        ports:
+        - containerPort: 8080

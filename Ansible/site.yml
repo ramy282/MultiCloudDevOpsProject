@@ -1,0 +1,10 @@
+---
+- name: Ivolve Graduation Project
+  hosts: all 
+  become: true 
+  roles: 
+    - git
+    - docker
+    - jenkins
+    - sonarqube
+    - openshift

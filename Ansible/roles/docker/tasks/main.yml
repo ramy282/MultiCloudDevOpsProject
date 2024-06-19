@@ -1,0 +1,40 @@
+---
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG key for ubuntu VM
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+        filename: docker
+
+    - name: Update apt cache again after adding Docker repo
+      apt:
+        update_cache: yes
+
+    - name: Install Docker Package
+      apt:
+        name: docker-ce
+        state: latest
+
+    - name: Check Docker service is started and enabled
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+    
