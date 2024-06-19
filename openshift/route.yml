@@ -6,7 +6,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: Grad-project-service
+    name: grad-project-service
   port:
     targetPort: 8082
   tls:
