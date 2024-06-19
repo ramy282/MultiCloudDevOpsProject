@@ -3,7 +3,7 @@ pipeline {
     agent any
     
     environment {
-        imageName   		    = 'ramy282/Grad-project'     	         // DockerHub repo/image name.
+        imageName   		    = 'ramy282/grad-project'     	         // DockerHub repo/image name.
         dockerHubCredentialsID	    = 'DockerHub'  		    		// DockerHub credentials ID.
 	openshiftCredentialsID	    = 'oc-token'		         	// service account token credentials ID
 	openshiftClusterURL	    = 'https://api.ocp-training.ivolve-test.com:6443'
