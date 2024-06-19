@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Grad-project
+  name: grad-project
   namespace: ramyanwar
 spec:
   replicas: 1
@@ -11,10 +11,10 @@ spec:
   template:
     metadata:
       labels:
-        app: Grad-project
+        app: grad-project
     spec:
       containers:
-      - name: Grad-project
+      - name: grad-project
         image: docker.io/ramy282/test:build-${BUILD_NUMBER}-app
         ports:
         - containerPort: 8082
