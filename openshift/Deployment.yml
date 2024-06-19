@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: grad-project
-        image: docker.io/ramy282/grad-project:8
+        image: docker.io/ramy282/grad-project:9
         ports:
         - containerPort: 8082
