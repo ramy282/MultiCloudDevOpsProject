@@ -320,7 +320,8 @@ resource "aws_route_table_association" "route_table_ass" {
 
 ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/5ad1e6c6-a944-45ad-a8da-4c66399b6192)
 
-applyyyyyyyyyyyyyyyyyyyyyyyy
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/a6108aab-702f-4184-ad45-3841d710ab13)
+
 
 ## Check the created resources on aws 
 
