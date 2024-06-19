@@ -7,13 +7,14 @@ pipeline {
         dockerHubCredentialsID	    = 'DockerHub'  		    		// DockerHub credentials ID.
 	openshiftCredentialsID	    = 'oc-token'		         	// service account token credentials ID
 	openshiftClusterURL	    = 'https://api.ocp-training.ivolve-test.com:6443'
-	nameSpace                   = 'ramyanwar'
+	openshiftProject            = 'ramyanwar'
 	gitRepoName 	            = 'MultiCloudDevOpsProject'
         gitUserName 	            = 'ramy282'
 	gitUserEmail                = 'ramyanwar282@gmail.com'
 	githubToken                 = 'github-token'
 	sonarTokenCredentialsID     = 'sonar-token'
         SCANNER_HOME           = tool 'sonar-scanner'
+        
 
 
     }
