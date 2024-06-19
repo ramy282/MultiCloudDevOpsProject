@@ -7,31 +7,31 @@ The MultiCloudDevOpsProject aims to establish a robust and scalable infrastructu
 
 ## Objective:
 1. Repository and Version Control:
-   - Set up a structured GitHub repository with distinct branches for development and production to manage and track code changes efficiently.
+- Set up a structured GitHub repository with distinct branches for development and production to manage and track code changes efficiently.
 
 2. Infrastructure Provisioning:
-   - Utilize Terraform to automate the provisioning of AWS infrastructure components, including VPC, subnets, security groups, and EC2 instances.
-   - Ensure modularization of Terraform scripts for reusability and maintainability.
+- Utilize Terraform to automate the provisioning of AWS infrastructure components, including VPC, subnets, security groups, and EC2 instances.
+- Ensure modularization of Terraform scripts for reusability and maintainability.
 
 3.Configuration Management:
-  - Employ Ansible to automate the configuration of EC2 instances, ensuring the installation of required packages for application deployment, Jenkins, and SonarQube.
-  - Utilize Ansible roles to promote code reuse and organization.
+- Employ Ansible to automate the configuration of EC2 instances, ensuring the installation of required packages for application deployment, Jenkins, and SonarQube.
+- Utilize Ansible roles to promote code reuse and organization.
 
 4.Containerization:
-  - Create Dockerfiles to containerize the application, ensuring consistent and portable environments across different stages of development and deployment.
+- Create Dockerfiles to containerize the application, ensuring consistent and portable environments across different stages of development and deployment.
 
 5. Continuous Integration:
-   - Configure Jenkins to automate the building of Docker images upon code commits, integrating it into the CI/CD pipeline to ensure continuous testing and integration.
+- Configure Jenkins to automate the building of Docker images upon code commits, integrating it into the CI/CD pipeline to ensure continuous testing and integration.
 
 6. Automated Deployment Pipeline:
-  - Develop a Jenkins pipeline (Jenkinsfile) to automate the deployment process, including stages for Git checkout, build, unit testing, SonarQube testing, and deployment on OpenShift.
-  - Leverage a shared Jenkins library for common pipeline functionalities.
+- Develop a Jenkins pipeline (Jenkinsfile) to automate the deployment process, including stages for Git checkout, build, unit testing, SonarQube testing, and deployment on OpenShift.
+- Leverage a shared Jenkins library for common pipeline functionalities.
 
 7. Monitoring and Logging:
-   - Set up centralized logging on OpenShift to collect and manage container logs, facilitating better monitoring and troubleshooting.
+- Set up centralized logging on OpenShift to collect and manage container logs, facilitating better monitoring and troubleshooting.
 
 8. AWS Integration:
-   - Integrate AWS services, including using S3 for Terraform backend state management and CloudWatch for monitoring infrastructure and application performance.
+- Integrate AWS services, including using S3 for Terraform backend state management and CloudWatch for monitoring infrastructure and application performance.
 
 ## Used Technologies 
 - **GitHub**: Contains a GitHub Actions workflow directory for configuring CI/CD processes.
