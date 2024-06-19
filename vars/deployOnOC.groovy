@@ -6,7 +6,7 @@ def call(String OpenShiftCredentialsID, String openshiftClusterurl, String opens
             sh "oc login --server=${openshiftClusterurl} --token=${OpenShift_CREDENTIALS} --insecure-skip-tls-verify"
             sh "oc apply -f Deployment.yml"
             sh "oc apply -f service.yml"
-            sh "oc apply -f route.yml"
+            sh "oc expose svc grad-project-service"
     }
 
 }
