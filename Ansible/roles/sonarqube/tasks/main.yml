@@ -1,3 +1,9 @@
+- name: "sysctl -w vm.max_map_count=262144"
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: '262144'
+    sysctl_set: yes
+
 - name: Create Docker volumes for SonarQube
   command: docker volume create {{ item }}
   with_items:
