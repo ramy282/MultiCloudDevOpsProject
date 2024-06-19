@@ -7,7 +7,7 @@ spec:
     kind: Service
     name: grad-project-service
   port:
-    targetPort: 8082
+    targetPort: 8080
   tls:
     termination: edge
   wildcardPolicy: None
