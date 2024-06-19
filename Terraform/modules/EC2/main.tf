@@ -25,6 +25,9 @@ resource "aws_instance" "app" {
   associate_public_ip_address 	= true
   key_name                    	= var.key-pair
 
+  root_block_device {
+    volume_size = 20 
+  }
   tags = {
     Name = "instance-${count.index}"
   }
