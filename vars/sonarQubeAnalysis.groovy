@@ -7,8 +7,8 @@ def call() {
     def sonarqubeCredentialsId = 'sonar-token'
 
     // Define other properties for SonarQube analysis
-    def projectName = 'Grad-project'
-    def projectKey = 'Grad-project'
+    def projectName = 'iVolve-Grad-project'
+    def projectKey = 'iVolve-Grad-project'
 
     // Run withSonarQubeEnv to inject SonarQube environment variables
     withSonarQubeEnv(credentialsId: sonarqubeCredentialsId) {
