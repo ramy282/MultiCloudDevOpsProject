@@ -328,7 +328,7 @@ applyyyyyyyyyyyyyyyyyyyyyyyy
 
 ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/4973e5c3-a21c-4dc6-a26a-e9525211d8c3)
 
-instanceeeeeeeeeeeeeeeeeeee
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/6b9d1e9d-8f7f-4279-bda8-eddb0c43d7b5)
 
 ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/71b891ee-98fb-4371-8c58-4a1dc2a417eb)
 
@@ -339,6 +339,13 @@ instanceeeeeeeeeeeeeeeeeeee
 ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/59d5614d-c5dc-41e6-a252-0591c2d4261c)
 
 ![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/a98b6c50-577e-48f6-b3d6-7082eb9816cc)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/8503a455-9f1e-4320-a1f4-815a42903bac)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/48742cb6-6909-40b1-bdb4-f616601bd1c4)
+
+![image](https://github.com/ramy282/MultiCloudDevOpsProject/assets/60857262/51b113f7-286d-4b4b-b2ef-582fbdfb0d2d)
+
 
 ## Destroy AWS Enviroment
 
