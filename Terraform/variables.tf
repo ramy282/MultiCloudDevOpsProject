@@ -52,7 +52,7 @@ variable "tag" {
 variable "type-ec2" {
   description = "size of EC2"
   type        = string
-  default     = "t2.large"
+  default     = "t3.large"
 }
 
 variable "key-pair" {
