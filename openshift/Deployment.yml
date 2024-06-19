@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: grad-project
-        image: docker.io/ramy282/test:build-${BUILD_NUMBER}-app
+        image: docker.io/ramy282/grad-project:3
         ports:
         - containerPort: 8082
